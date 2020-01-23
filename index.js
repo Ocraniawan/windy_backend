@@ -9,6 +9,8 @@ const user = require('./src/routes/user')
 const hotel = require('./src/routes/hotel')
 const plane = require('./src/routes/plane')
 const rooms = require('./src/routes/rooms')
+const balance = require('./src/routes/balance')
+const forgot_pass = require('./src/routes/forgot_pass')
 
 const app = express()
 
@@ -23,6 +25,8 @@ app.use('/user',user)
 app.use('/hotel',hotel)
 app.use('/plane',plane)
 app.use('/rooms',rooms)
+app.use('/balance',balance)
+app.use('/forgot_pass',forgot_pass)
 
 
 
