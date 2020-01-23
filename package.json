@@ -1,0 +1,31 @@
+{
+  "name": "windy_apps",
+  "version": "1.0.0",
+  "description": "windy apps clone airy rooms",
+  "main": "index.js",
+  "scripts": {
+    "test": "node, javascript"
+  },
+  "keywords": [
+    "node",
+    "javascript"
+  ],
+  "author": "Silvermont",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-paginate": "^1.0.0",
+    "faker": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.20.8",
+    "multer": "^1.4.2",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.2",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {}
+}
