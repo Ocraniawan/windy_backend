@@ -34,6 +34,7 @@ router.post('/',upload.single('image'),(req,res)=>{
         (err,result,rows,field)=>{
             if(err){
                 console.log(err)
+                res.send(err)
             }else{
                 res.send({succes:true,data:result})
             }
@@ -47,6 +48,7 @@ router.get('/',(req,res)=>{
     mysql.execute(all,[], (err, result,field)=>{
         if(err){
             console.log(err)
+            res.send(err)
         }else{
             res.send({succes:true,data:result})
         }
@@ -61,6 +63,7 @@ router.get('/:id',(req,res)=>{
     mysql.execute(detail,[id], (err, result,field)=>{
         if(err){
             console.log(err)
+            res.send(err)
         }else{
             res.send({succes:true,data:result[0]})
         }
@@ -77,6 +80,7 @@ router.put('/:id',upload.single('image'),(req,res)=>{
     mysql.execute(edit, [name,image,updated_on,id],(err,result,field)=>{
         if(err){
             console.log(err)
+            res.send(err)
         }else{
             res.send({succes:true,data:result})
         }
@@ -90,6 +94,7 @@ router.delete('/:id',(req,res)=>{
     mysql.execute(dlt,[id], (err,result,field)=>{
         if(err){
             console.log(err)
+            res.send(err)
         }else{
             res.send({succes:true,data:result})
         }
