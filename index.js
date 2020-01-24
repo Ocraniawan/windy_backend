@@ -33,5 +33,5 @@ app.use('/forgot_pass',forgot_pass)
 const port = process.env.APP_PORT
 
 app.listen(port,()=>{
-    console.log('App listen on Port'+ port)
+    console.log('App listen on Port '+ port)
 })
