@@ -13,8 +13,3 @@ const detail = `SELECT user.first_name as first_name, user.last_name as last_nam
                 WHERE user_id=?`
 
 module.exports = {detail,add,dlt,edit, all}
-
-// SELECT carts.id_carts, carts.item_id, item.item_name, item.price, item.image, carts.quantity, item.rating FROM carts 
-// INNER JOIN item ON carts.item_id = item.id_item 
-// INNER JOIN user ON carts.user_id = user.id
-//  WHERE user.id=? 
