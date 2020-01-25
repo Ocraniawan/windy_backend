@@ -52,7 +52,7 @@ router.put('/checkout/:id',(req,res)=>{
             res.send({succes:true,data:result})
         }
     }
-    ) 
+    )  
 })
 
 

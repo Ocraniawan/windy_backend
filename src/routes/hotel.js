@@ -26,11 +26,11 @@ const upload = multer({storage:storage, fileFilter:fileFilter})
 // ADD HOTEL
 router.post('/',upload.single('image'),(req,res)=>{
     const image = (req.file.originalname)
-    const {name,location_id,description,longitude,latitude} = req.body
+    const {name,location_id,description,address,longitude,latitude} = req.body
     const created_on = new Date()
     const updated_on = new Date()
 
-    mysql.execute(add, [name,location_id,description,longitude,latitude,image,created_on,updated_on],
+    mysql.execute(add, [name,location_id,description,longitude,latitude,address,image,created_on,updated_on],
         (err,result,rows,field)=>{
             if(err){
                 console.log(err)
@@ -75,9 +75,9 @@ router.get('/:id',(req,res)=>{
 router.put('/:id',upload.single('image'),(req,res)=>{
     const {id} = req.params
     const image = (req.file.originalname)
-    const{name,location_id,description,longitude,latitude} = req.body
+    const{name,location_id,description,longitude,latitude ,address} = req.body
     const updated_on = new Date()
-    mysql.execute(edit, [name,location_id,description,longitude,latitude,image,updated_on,id],(err,result,field)=>{
+    mysql.execute(edit, [name,location_id,description,longitude,latitude,address,image,updated_on,id],(err,result,field)=>{
         if(err){
             console.log(err)
             res.send(err)

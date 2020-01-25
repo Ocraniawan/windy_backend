@@ -64,7 +64,7 @@ router.put('/:id',(req,res)=>{
     ) 
 })
 
-/** delete Hotel */
+/** delete flight */
 router.delete('/:id',(req,res)=>{
     const {id} = req.params
     mysql.execute(dlt,[id], (err,result,field)=>{

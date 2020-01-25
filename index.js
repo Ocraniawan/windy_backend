@@ -10,7 +10,9 @@ const hotel = require('./src/routes/hotel')
 const plane = require('./src/routes/plane')
 const rooms = require('./src/routes/rooms')
 const balance = require('./src/routes/balance')
+const book = require('./src/routes/hotelBooking')
 const forgot_pass = require('./src/routes/forgot_pass')
+const planeBooking = require('./src/routes/planeBooking')
 
 const app = express()
 
@@ -26,7 +28,9 @@ app.use('/hotel',hotel)
 app.use('/plane',plane)
 app.use('/rooms',rooms)
 app.use('/balance',balance)
+app.use('/book',book)
 app.use('/forgot_pass',forgot_pass)
+app.use('/planebook',planeBooking) 
 
 
 

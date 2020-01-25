@@ -7,8 +7,9 @@ const { detail, add, dlt, edit, all } = require('../model/rooms')
 
 /**Upload Foto/File */
 const multer = require('multer')
+const path = require('path')
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function (req, files, cb) {
         cb(null, './src/images/rooms')
     },
     filename: function (req, file, cb) {
@@ -25,12 +26,19 @@ const fileFilter = (req, files, cb) => {
 const upload = multer({ storage: storage, fileFilter: fileFilter })
 
 // ADD Rooms
-router.post('/', upload.array('images', 2), (req, res) => {
-    const images = (req.files.originalname)
+router.post('/', upload.array('images', 5), (req,res) => {
+    var images = ''
+    
+    for(i = 0; i < 5; i++)
+    if (i === 4) {
+        images += (req.files[i].originalname)
+    }else{
+        images += (req.files[i].originalname + ', ')
+    }
+
     const { rooms_type_id, hotel_id, price } = req.body
     const created_on = new Date()
     const updated_on = new Date()
-    console.log(rooms_type_id, images)
     mysql.execute(add, [rooms_type_id, hotel_id, price, images, created_on, updated_on],
         (err, result, rows, field) => {
             if (err) {
@@ -45,7 +53,6 @@ router.post('/', upload.array('images', 2), (req, res) => {
 
 /* detail all rooms */
 router.get('/', (req, res) => {
-
     mysql.execute(all, [], (err, result, field) => {
         if (err) {
             console.log(err)
@@ -66,7 +73,8 @@ router.get('/:id', (req, res) => {
             console.log(err)
             res.send(err)
         } else {
-            res.send({ succes: true, data: result[0] })
+            res.send({ succes: true, data: result[0]})
+            console.log(err)
         }
     })
 })
@@ -74,8 +82,15 @@ router.get('/:id', (req, res) => {
 
 /**edit room */
 router.put('/:id', upload.array('images', 5), (req, res) => {
+    var images = ''
+    
+    for(i = 0; i < 5; i++)
+    if (i === 4) {
+        images += (req.files[i].originalname)
+    }else{
+        images += (req.files[i].originalname + ', ')
+    }
     const { id } = req.params
-    const images = (req.file.originalname)
     const { rooms_type_id, hotel_id, price } = req.body
     const updated_on = new Date()
     mysql.execute(edit, [rooms_type_id, hotel_id, price, images, updated_on, id], (err, result, field) => {
@@ -89,7 +104,7 @@ router.put('/:id', upload.array('images', 5), (req, res) => {
     )
 })
 
-/** delete Hotel */
+/** delete rooms */
 router.delete('/:id', (req, res) => {
     const { id } = req.params
     mysql.execute(dlt, [id], (err, result, field) => {

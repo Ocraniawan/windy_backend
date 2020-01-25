@@ -30,11 +30,19 @@ const upload = multer({ storage: storage, fileFilter: fileFilter })
 // Register User
 router.post('/register', upload.single('image'), (req, res) => {
     const { title_id, username, first_name, last_name, phone_number, email, password } = req.body
-    const image = (req.file.originalname)
+
+    // DEFAULT IMAGE
+    let image = 'coffe.jpg'
+    if (req.file) {
+        image = (req.file.originalname)
+    }
+
     const enc_pass = bcrypt.hashSync(password)
     const created_on = new Date()
     const updated_on = new Date()
 
+    console.log(image)
+    // res.send('haha')
     mysql.execute(register, [title_id, username, first_name, last_name, phone_number, email, enc_pass, image, created_on, updated_on], (err, result) => {
         if (err) {
             console.log(err)
