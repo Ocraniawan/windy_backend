@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const mysql = require('../resources/config')
 const auth = require('../resources/middleware')
-const { login, detail, register, dlt, edit, logout } = require('../model/user')
+const { login, detail, register, dlt, edit, logout, logged_id, check } = require('../model/user')
+const { add } = require('../model/balance')
 
 /**Upload Foto/File */
 const multer = require('multer')
@@ -41,13 +42,29 @@ router.post('/register', upload.single('image'), (req, res) => {
     const created_on = new Date()
     const updated_on = new Date()
 
-    console.log(image)
-    // res.send('haha')
-    mysql.execute(register, [title_id, username, first_name, last_name, phone_number, email, enc_pass, image, created_on, updated_on], (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.send({ succsess: true, data: result })
+    // CHECK IF USERNAME/ EMAIL ALREADY USED
+
+    mysql.execute(check, [username, email], (err1, res1, field1) => {
+        if (err1) {
+            console.log(err1)
+            res.send({
+                status: 400,
+                msg: err1,
+            })
+        } else if (res1.length === 0) {
+            mysql.execute(register, [title_id, username, first_name, last_name, phone_number, email, enc_pass, image, created_on, updated_on], (err, result) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.send({ succsess: true, data: result })
+                }
+            })
+        }
+        else {
+            res.send({
+                status: 400,
+                msg: 'Username/email already used.',
+            })
         }
     })
 })
@@ -75,9 +92,42 @@ router.post('/', (req, res) => {
                             console.log(err1)
                             res.send(err1)
                         } else {
-                            res.send({
-                                succes: true,
-                                auth
+                            // BALANCE SET TO 0
+                            mysql.execute(detail, [id], (err1, res1, field1) => {
+                                if (err1) {
+                                    console.log(err1)
+                                } else {
+                                    // console.log(res1[0].first_login)
+                                    if (res1[0].first_login === 0) {
+                                        mysql.execute(add, [id, balance = 0, created_on, updated_on],
+                                            (err3, res3, field3) => {
+                                                if (err3) {
+                                                    res.send(err3)
+                                                } else {
+                                                    mysql.execute(logged_id, [id],
+                                                        (err4, res4, field4) => {
+                                                            if (err4) {
+                                                                console.log(err4)
+                                                                res.send(err4)
+                                                            } else {
+                                                                console.log(res3)
+                                                                res.send({
+                                                                    succes: true,
+                                                                    auth
+                                                                })
+                                                            }
+                                                        }
+                                                    )
+                                                }
+                                            }
+                                        )
+                                    } else {
+                                        res.send({
+                                            succes: true,
+                                            auth
+                                        })
+                                    }
+                                }
                             })
                         }
                     })
@@ -141,19 +191,20 @@ router.delete('/:id', (req, res) => {
 })
 
 /**edit user */
-router.put('/:id', auth, upload.single('image'), (req, res) => {
-    const { id } = req.params
+router.put('/', auth, upload.single('image'), (req, res) => {
+    const jwt_token = req.headers['authorization'].substr(7)
+    const decoded = jwt.verify(jwt_token, process.env.APP_KEY)
+    const id = decoded.id
     const { title_id, username, first_name, last_name, phone_number, email, password } = req.body
     const image = (req.file.originalname)
     const enc_pass = bcrypt.hashSync(password)
     const updated_on = new Date()
-
     mysql.execute(
         edit, [title_id, username, first_name, last_name, phone_number, email, enc_pass, image, updated_on, id], (err, result, field) => {
             if (err) {
-                console.log(err)
                 res.send(err)
             } else {
+                // END
                 res.send({ succes: true, data: result })
             }
         }

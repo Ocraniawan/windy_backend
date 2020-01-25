@@ -13,6 +13,8 @@ const balance = require('./src/routes/balance')
 const book = require('./src/routes/hotelBooking')
 const forgot_pass = require('./src/routes/forgot_pass')
 const planeBooking = require('./src/routes/planeBooking')
+const hotel_booking = require('./src/routes/hotelBooking')
+const hotel_booking_history = require('./src/routes/hotel_booking_history')
 
 const app = express()
 
@@ -31,6 +33,8 @@ app.use('/balance',balance)
 app.use('/book',book)
 app.use('/forgot_pass',forgot_pass)
 app.use('/planebook',planeBooking) 
+app.use('/hotel_booking',hotel_booking)
+app.use('/hotel_booking_history',hotel_booking_history)
 
 
 
