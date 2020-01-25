@@ -93,6 +93,7 @@ router.put('/checkout', auth, (req, res) => {
                 })
             }
         }
+    })
 })
 
 
