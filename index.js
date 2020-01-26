@@ -14,7 +14,6 @@ const book = require('./src/routes/hotelBooking')
 const forgot_pass = require('./src/routes/forgot_pass')
 const planeBooking = require('./src/routes/planeBooking')
 const hotel_booking = require('./src/routes/hotelBooking')
-const hotel_booking_history = require('./src/routes/hotel_booking_history')
 const flight = require('./src/routes/flight')
 
 
@@ -36,7 +35,6 @@ app.use('/book',book)
 app.use('/forgot_pass',forgot_pass)
 app.use('/planebook',planeBooking) 
 app.use('/hotel_booking',hotel_booking)
-app.use('/hotel_booking_history',hotel_booking_history)
 app.use('/flight', flight)
 
 
