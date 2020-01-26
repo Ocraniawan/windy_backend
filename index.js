@@ -21,9 +21,10 @@ const flight = require('./src/routes/flight')
 const app = express()
 
 app.use(bodyParser.urlencoded({extended:false}))
-// app.use('/src/images',express.static('src/images/item'))
-// app.use('/src/images',express.static('src/images/restaurant'))
-// app.use('/src/images',express.static('src/images/categories'))
+app.use('/src/images',express.static('src/images/rooms'))
+app.use('/src/images',express.static('src/images/plane'))
+app.use('/src/images',express.static('src/images/hotel'))
+app.use('/src/images',express.static('src/images/user'))
 
 app.use(bodyParser.json())
 app.use(cors())

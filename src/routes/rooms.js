@@ -26,11 +26,11 @@ const fileFilter = (req, files, cb) => {
 const upload = multer({ storage: storage, fileFilter: fileFilter })
 
 // ADD Rooms
-router.post('/', upload.array('images', 5), (req,res) => {
+router.post('/', upload.array('images', 3), (req,res) => {
     var images = ''
     
-    for(i = 0; i < 5; i++)
-    if (i === 4) {
+    for(i = 0; i < 3; i++)
+    if (i === 2) {
         images += (req.files[i].originalname)
     }else{
         images += (req.files[i].originalname + ', ')
@@ -81,11 +81,11 @@ router.get('/:id', (req, res) => {
 
 
 /**edit room */
-router.put('/:id', upload.array('images', 5), (req, res) => {
+router.put('/:id', upload.array('images', 3), (req, res) => {
     var images = ''
     
-    for(i = 0; i < 5; i++)
-    if (i === 4) {
+    for(i = 0; i < 3; i++)
+    if (i === 2) {
         images += (req.files[i].originalname)
     }else{
         images += (req.files[i].originalname + ', ')
