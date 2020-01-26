@@ -59,16 +59,16 @@ router.get('/', (req, res) => {
         where += `WHERE`
         Object.keys(query.search).forEach(key => {
             if (Object.keys(query.search).length === 1) {
-                where += ` rooms.is_available = 1 AND rooms.${key} LIKE '%${query.search[key]}%' `
+                where += ` hotel.is_available = 1 AND hotel.${key} LIKE '%${query.search[key]}%' `
                 full_url += `search[${key}]=${query.search[key]}&`
                 count++
             } else if (Object.keys(query.search).length === count) {
-                where += ` rooms.is_available = 1 AND rooms.${key} LIKE '%${query.search[key]}%' `
+                where += ` hotel.is_available = 1 AND hotel.${key} LIKE '%${query.search[key]}%' `
                 full_url += `search[${key}]=${query.search[key]}&`
                 count++
             }
             else {
-                where += ` rooms.is_available = 1 AND rooms.${key} LIKE '%${query.search[key]}%' AND `
+                where += ` hotel.is_available = 1 AND hotel.${key} LIKE '%${query.search[key]}%' AND `
                 full_url += `search[${key}]=${query.search[key]}&`
                 count++
             }
