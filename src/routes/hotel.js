@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
             console.log(err)
             res.send(err)
         }else if (result.length === 0) {
-            res.send('no data')
+            res.send('no data retriwvwd')
         }
          else {
             const sql = `SELECT rooms.*, room_type.name as room_type FROM rooms INNER JOIN room_type ON rooms.rooms_type_id = room_type.id WHERE hotel_id = ${result[0].hotel_id}`
