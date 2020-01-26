@@ -30,11 +30,11 @@ const upload = multer({ storage: storage, fileFilter: fileFilter })
 router.post('/', upload.single('image'), (req, res) => {
     const image = (req.file.originalname)
 
-    const { name, location_id, description, longitude, latitude } = req.body
+    const { name, location_id, description, longitude,latitude, address } = req.body
     const created_on = new Date()
     const updated_on = new Date()
 
-    mysql.execute(add, [name, location_id, description, longitude, latitude, image, created_on, updated_on],
+    mysql.execute(add, [name, location_id, description, longitude, latitude, address, image, created_on, updated_on],
         (err, result, rows, field) => {
             if (err) {
                 console.log(err)
