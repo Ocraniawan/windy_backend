@@ -46,6 +46,39 @@ router.post('/', upload.single('image'), (req, res) => {
     )
 })
 
+
+
+
+/* detail Hotel */
+router.get('/:id', (req, res) => {
+    const { id } = req.params
+    mysql.execute(detail, [id], (err, result, field) => {
+        if (err) {
+            console.log(err)
+            res.send(err)
+        } else {
+            const sql = `SELECT * FROM rooms WHERE hotel_id = ${result[0].hotel_id}`
+            mysql.execute(sql, (err1, res1, field1)=>{
+                if (err1) {
+                    console.log(err1)
+                    res.send(err1)
+                }else{
+                    res.send({
+                         succes: true, 
+                         data: result[0],
+                         rooms: res1 
+                        })
+                }
+            })
+        }
+    })
+})
+
+
+
+
+
+
 /* detail all Hotel */
 router.get('/', (req, res) => {
     const query = req.query
@@ -153,18 +186,7 @@ router.get('/', (req, res) => {
 
 
 
-/* detail Hotel */
-router.get('/:id', (req, res) => {
-    const { id } = req.params
-    mysql.execute(detail, [id], (err, result, field) => {
-        if (err) {
-            console.log(err)
-            res.send(err)
-        } else {
-            res.send({ succes: true, data: result[0] })
-        }
-    })
-})
+
 
 
 /**edit Hotel */
