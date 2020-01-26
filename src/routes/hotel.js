@@ -56,7 +56,10 @@ router.get('/:id', (req, res) => {
         if (err) {
             console.log(err)
             res.send(err)
-        } else {
+        }else if (result.length === 0) {
+            res.send('no data')
+        }
+         else {
             const sql = `SELECT * FROM rooms WHERE hotel_id = ${result[0].hotel_id}`
             mysql.execute(sql, (err1, res1, field1)=>{
                 if (err1) {
