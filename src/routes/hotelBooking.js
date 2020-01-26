@@ -45,6 +45,19 @@ router.post('/', auth, (req, res) => {
 })
 
 
+/* detail room */
+router.get('/', auth, (req, res) => {
+    const { user_id, book_id } = req.query
+    mysql.execute(detail, [user_id, book_id], (err, result, field) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.send({ succes: true, data: result })
+        }
+    })
+})
+
+
 /* GET HISTORY (BOOKED) BY USER ID */
 router.get('/booked/:id', auth, (req, res) => {
     const user_id = req.params.id
