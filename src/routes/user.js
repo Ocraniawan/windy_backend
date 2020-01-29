@@ -31,6 +31,7 @@ const upload = multer({ storage: storage, fileFilter: fileFilter })
 // Register User
 router.post('/register', upload.single('image'), (req, res) => {
     const { title_id, username, first_name, last_name, phone_number, email, password } = req.body
+    console.log(req.body)
     console.log(title_id, username, first_name, last_name, phone_number, email, password)
 
     // DEFAULT IMAGE
