@@ -23,7 +23,8 @@ WHERE user_id=? AND hotel_booking.is_booked = 0`
 const check_hotel = `SELECT  * FROM hotel_booking WHERE id=?`
 const check_room = `SELECT  * FROM rooms WHERE id=?`
 
-const detail = `SELECT user.first_name as first_name, user.last_name as last_name, title.name as title, user.phone_number as phone, user.email as email, 
+const detail = `SELECT user.first_name as first_name, user.last_name as last_name, title.name as title,                        user.phone_number as phone, user.email as email, 
+                hotel_booking.id as book_id,
                 room_type.name as rooms_name, duration, hotel.name as hotel_name, rooms.price as price,
                 hotel.image as image FROM hotel_booking    
                 INNER JOIN user ON hotel_booking.user_id = user.id

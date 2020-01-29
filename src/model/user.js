@@ -1,6 +1,6 @@
 const login = 'SELECT * FROM user WHERE username=?'
 const check = 'SELECT * FROM user WHERE username=? OR email=?'
-const detail = 'SELECT * FROM user WHERE id=?'
+const detail = 'SELECT user.*, title.name as title FROM user INNER JOIN title ON user.title_id = title.id WHERE user.id=?'
 const register = 'INSERT INTO user(title_id, username, first_name, last_name, phone_number, email, password, image, created_on, updated_on) VALUES (?,?,?,?,?,?,?,?,?,?)'
 const dlt = 'DELETE FROM user WHERE id=?'
 const edit = 'UPDATE user SET title_id=?, username=?, first_name=?, last_name=?, phone_number=?, email=?, password=?, image=?, updated_on=? WHERE id=?'

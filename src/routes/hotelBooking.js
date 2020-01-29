@@ -36,7 +36,22 @@ router.post('/', auth, (req, res) => {
                         console.log(err)
                         res.send(err)
                     } else {
-                        res.send({ succes: true, data: result })
+                        mysql.execute(detail, [user_id, result.insertId], (err2, res2, field2)=>{
+                            if (err2) {
+                                console.log(err2)
+                                res.send({
+                                    status: 400,
+                                    msg: err2,
+                                })
+                            } else {
+                                res.send({
+                                    succes: true,
+                                    status: 200,
+                                    data: res2
+                                })
+                            }
+                        })
+                        // res.send({ succes: true, data: result })
                     }
                 }
             )
@@ -109,7 +124,6 @@ router.get('/not_booked/:id', auth, (req, res) => {
 })
 
 
-
 /**check out room */
 router.put('/checkout', auth, (req, res) => {
     const { user_id, book_id } = req.query
@@ -128,6 +142,7 @@ router.put('/checkout', auth, (req, res) => {
         } else {
             if (res1[0].balance < total) {
                 res.send({
+                    succes: false,
                     status: 200,
                     msg: "insufficient balance! please refill first"
                 })

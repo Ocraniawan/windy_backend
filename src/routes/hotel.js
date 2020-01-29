@@ -60,7 +60,7 @@ router.get('/:id', (req, res) => {
             res.send('no data retriwvwd')
         }
          else {
-            const sql = `SELECT rooms.*, room_type.name as room_type FROM rooms INNER JOIN room_type ON rooms.rooms_type_id = room_type.id WHERE hotel_id = ${result[0].hotel_id}`
+            const sql = `SELECT rooms.*, room_type.name as room_type FROM rooms INNER JOIN room_type ON rooms.rooms_type_id = room_type.id WHERE rooms.is_available AND hotel_id = ${result[0].hotel_id}`
             mysql.execute(sql, (err1, res1, field1)=>{
                 if (err1) {
                     console.log(err1)
@@ -76,9 +76,6 @@ router.get('/:id', (req, res) => {
         }
     })
 })
-
-
-
 
 
 
@@ -144,7 +141,6 @@ router.get('/', (req, res) => {
     // }
 
     // res.send(sql)
-    
     mysql.execute(sql1, (err1, res1, field1) => {
         if (err1) {
             console.log(err1)
